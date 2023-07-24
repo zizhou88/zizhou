@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='gojs/release/go.js') }}"> </script>
+</head>
+<body>
+  <!-- 导航栏代码 -->
+  <nav>
+      <div class="logo" href="{{ url_for('static', filename='images/university.jpg') }}">
+        <img src="{{ url_for('static', filename='images/university.jpg') }}" alt="Logo">
+      </div>
+      <div class="links">
+        <a href="#">Home page</a>
+        <a href="#">strategy authoring</a>
+        <a href="#">strategy generation</a>
+        <a href="#">strategy backtesting</a>
+        <a href="#">My strategy</a>
+        <a href="#">User</a>
+      </div>
+    </nav>
+
+    <!-- 页面主体部分 -->
+    <div id="main">
+        <!-- 左边栏 -->
+        <div id="sidebar">
+            <!-- 创建新策略部分 -->
+            <div class="sidebar" id = "sidebar">
+                <img src="{{ url_for('static', filename='images/newp.jpg') }}" alt="newp" id="newp">
+                <div id="createStrategy" style="display: none;">
+                    <input type="text" id="strategyName" name="strategy_name" placeholder="Strategy name">
+                    <button id="createButton" onclick="saveStrategy()">create</button>
+                </div>
+                
+            
+            </div>
+            <!-- 策略列表 -->
+            <div id="strategyList"></div>
+        </div>
+
+        <!-- 内容区域 -->
+        <div id="content">
+            <!-- 左边分区 -->
+            <div id="leftPanel">
+                <!-- 下拉栏部分1,买入条件 -->
+                <div class="purchase">
+                    <button class="dropbtn1" id="purchase-button">1.Purchase condition</button>
+                    <div class="dropdown dropdown-1 common-dropdown">
+                        <button class="dropbtn">1.Technical indicators</button>
+                        <div class="dropdown-content">
+                            <!-- 在这里添加选项 -->
+                            <a href="#" id="option1" class="option">MA</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-ma">
+                                <a href="#" id="sub-option-magoldfork" class="sub-option1">MA gold fork</a>
+                                <a href="#" id="sub-option-madeathfork" class="sub-option1">MA dead fork</a>
+                                <a href="#" id="sub-option-mabull" class="sub-option1">MA long position</a>
+                                <a href="#" id="sub-option-mabear" class="sub-option1">MA short position</a>
+                            </div>
+                            <a href="#" id="option46" class="option">MACD</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-macd">
+                                <a href="#" id="sub-option-macdgoldcross" class="sub-option1">MACD golden cross</a>
+                                <a href="#" id="sub-option-macddeadcross" class="sub-option1">MACD dead cross</a>
+                                <a href="#" id="sub-option-macdbullish" class="sub-option1">MACD bullish</a>
+                                <a href="#" id="sub-option-macdbearish" class="sub-option1">MACD bearish</a>
+                                <a href="#" id="sub-option-macdhiddenbullish" class="sub-option1">Hidden bullish divergence</a>
+                                <a href="#" id="sub-option-macdhiddenbearish" class="sub-option1">Hidden bearish divergence</a>
+                            </div>
+
+                            <a href="#" id="option62" class="option">RSI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-rsi">
+                                <a href="#" id="sub-option-rsigoldcross" class="sub-option1">RSI golden cross</a>
+                                <a href="#" id="sub-option-rsideadcross" class="sub-option1">RSI dead cross</a>
+                                <a href="#" id="sub-option-rsibullish" class="sub-option1">RSI bullish</a>
+                                <a href="#" id="sub-option-rsibearish" class="sub-option1">RSI bearish</a>
+                                <a href="#" id="sub-option-rsihiddenbullish" class="sub-option1">RSI hidden bullish divergence</a>
+                                <a href="#" id="sub-option-rsihiddenbearish" class="sub-option1">RSI hidden bearish divergence</a>
+                            </div>
+
+                            <a href="#" id="option11" class="option">BOLL</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-bollinger">
+                                <a href="#" id="sub-option-bollingermidline" class="sub-option1">Bollinger Midline</a>
+                                <a href="#" id="sub-option-bollingerlowerband" class="sub-option1">Bollinger Lower Band</a>
+                                <a href="#" id="sub-option-bollingerbreakupper" class="sub-option1">Bollinger Break Upper Band</a>
+                                <a href="#" id="sub-option-bollingerbreaklower" class="sub-option1">Bollinger Break Lower Band</a>
+                            </div>
+
+                            <a href="#" id="option5" class="option">ATR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-atr">
+                                <a href="#" id="sub-option-atrabove" class="sub-option1">ATR above</a>
+                                <a href="#" id="sub-option-atrbelow" class="sub-option1">ATR below</a>
+                            </div>
+
+                            <a href="#" id="option15" class="option">CCI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-cci">
+                                <a href="#" id="sub-option-ccigreater" class="sub-option1">CCI greater than</a>
+                                <a href="#" id="sub-option-cciless" class="sub-option1">CCI less than</a>
+                                <a href="#" id="sub-option-cciinterval" class="sub-option1">CCI interval</a>
+                            </div>
+
+                            <a href="#" id="option41" class="option">KD</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-kd">
+                                <a href="#" id="sub-option-dlinegreater" class="sub-option1">D line greater than</a>
+                                <a href="#" id="sub-option-dlineless" class="sub-option1">D line less than</a>
+                                <a href="#" id="sub-option-klinebreakup" class="sub-option1">K line breaks above D line</a>
+                                <a href="#" id="sub-option-klinebreakdown" class="sub-option1">K line breaks below D line</a>
+                            </div>
+
+                            <a href="#" id="option53" class="option">OBV</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-obv">
+                                <a href="#" id="sub-option-obvrising" class="sub-option1">OBV rising</a>
+                                <a href="#" id="sub-option-obvfalling" class="sub-option1">OBV falling</a>
+                            </div>
+
+                            <a href="#" id="option32" class="option">DMI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-dmi">
+                                <a href="#" id="sub-option-pdibreakeup" class="sub-option1">PDI breaks above MDI</a>
+                                <a href="#" id="sub-option-pdibreakedown" class="sub-option1">PDI breaks below MDI</a>
+                                <a href="#" id="sub-option-adxuptrend" class="sub-option1">ADX uptrend</a>
+                                <a href="#" id="sub-option-adxreversal" class="sub-option1">ADX reversal</a>
+                            </div>
+
+                            <a href="#" id="option61" class="option">ROC</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-roc">
+                                <a href="#" id="sub-option-rocbreakup" class="sub-option1">ROC breaks above ROCMA</a>
+                                <a href="#" id="sub-option-rocbreakdown" class="sub-option1">ROC breaks below ROCMA</a>
+                                <a href="#" id="sub-option-rocoverbought" class="sub-option1">ROC overbought</a>
+                                <a href="#" id="sub-option-rocoversold" class="sub-option1">ROC oversold</a>
+                            </div>
+
+                            <a href="#" id="option2" class="option">ADTM</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-adtm">
+                                <a href="#" id="sub-option-adtmlower" class="sub-option1">ADTM lower than</a>
+                                <a href="#" id="sub-option-adtmhigher" class="sub-option1">ADTM higher than</a>
+                            </div>
+
+                            <a href="#" id="option70" class="option">TRIX</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-trix">
+                                <a href="#" id="sub-option-trixbreakup" class="sub-option1">TRIX breaks above average</a>
+                                <a href="#" id="sub-option-trixbreakdown" class="sub-option1">TRIX breaks below average</a>
+                            </div>
+
+                            <a href="#" id="option76" class="option">VR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-vr">
+                                <a href="#" id="sub-option-vrgreater" class="sub-option1">VR line greater than</a>
+                                <a href="#" id="sub-option-vrless" class="sub-option1">VR line less than</a>
+                                <a href="#" id="sub-option-vrupward" class="sub-option1">VR upward</a>
+                                <a href="#" id="sub-option-vrdownward" class="sub-option1">VR downward</a>
+                            </div>
+
+                            <a href="#" id="option48" class="option">MFI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-mfi">
+                                <a href="#" id="sub-option-mfigreater" class="sub-option1">MFI greater than</a>
+                                <a href="#" id="sub-option-mfiless" class="sub-option1">MFI less than</a>
+                            </div>
+
+                            <a href="#" id="option63" class="option">SAR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-sar">
+                                <a href="#" id="sub-option-pricebelowsar" class="sub-option1">Price below SAR</a>
+                                <a href="#" id="sub-option-priceabovesar" class="sub-option1">Price above SAR</a>
+                            </div>
+
+                            <a href="#" id="option77" class="option">WAD</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-wad">
+                                <a href="#" id="sub-option-wadupward" class="sub-option1">WAD upward</a>
+                                <a href="#" id="sub-option-waddownward" class="sub-option1">WAD downward</a>
+                            </div>
+
+                            <a href="#" id="option36" class="option">EMV</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-emv">
+                                <a href="#" id="sub-option-emvbreakup" class="sub-option1">EMV breaks above 0</a>
+                                <a href="#" id="sub-option-emvbreakdown" class="sub-option1">EMV breaks below 0</a>
+                                <a href="#" id="sub-option-emvavgbreakup" class="sub-option1">Average breaks above 0</a>
+                                <a href="#" id="sub-option-emvavgbreakdown" class="sub-option1">Average breaks below 0</a>
+                            </div>
+
+                            <a href="#" id="option78" class="option">WR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-wr">
+                                <a href="#" id="sub-option-wrgreater" class="sub-option1">WR greater than</a>
+                                <a href="#" id="sub-option-wrless" class="sub-option1">WR less than</a>
+                            </div>
+
+                            <a href="#" id="option50" class="option">MTM</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-mtm">
+                                <a href="#" id="sub-option-mtmbreakup" class="sub-option1">MTM breaks above MTMMA</a>
+                                <a href="#" id="sub-option-mtmbreakdown" class="sub-option1">MTM breaks below MTMMA</a>
+                                <a href="#" id="sub-option-mtmupward" class="sub-option1">MTM upward</a>
+                                <a href="#" id="sub-option-mtmdownward" class="sub-option1">MTM downward</a>
+                            </div>
+
+                            <a href="#" id="option71" class="option">UOS</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-uos">
+                                <a href="#" id="sub-option-uosreversal" class="sub-option1">UOS reversal</a>
+                            </div>
+
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="dropdown dropdown-2 common-dropdown">
+                        <button class="dropbtn">2.Market</button>
+                        <div class="dropdown-content">
+                            <!-- 在这里添加选项 -->
+                            <a href="#" id="option84" class="option">Opening price</a>
+                            <a href="#" id="option85" class="option">Closing price</a>
+                            <a href="#" id="option86" class="option">Highest price</a>
+                            <a href="#" id="option87" class="option">Lowest price</a>
+                            <a href="#" id="option88" class="option">Closing price of the previous day</a>
+                            <a href="#" id="option89" class="option">Daily average transaction price</a>
+                            <a href="#" id="option90" class="option">Closing price of the right after the right</a>
+                            <a href="#" id="option91" class="option">Average price of the right after the right</a>
+                            <a href="#" id="option92" class="option">Transaction amount</a>
+                            <a href="#" id="option93" class="option">Trading volume</a>
+                            <a href="#" id="option94" class="option">Stock price increase</a>
+                            <a href="#" id="option95" class="option">Relative increase of the stock price</a>
+                            <a href="#" id="option96" class="option">Cumulative turnover rate</a>
+                            <a href="#" id="option97" class="option">Limit mark of rise and fall</a>
+                            <a href="#" id="option98" class="option">Total share capital</a>
+                            <a href="#" id="option99" class="option">Circulating share capital</a>
+                            <a href="#" id="option100" class="option">Total market value</a>
+                            <a href="#" id="option101" class="option">Circulating market value</a>
+                            <a href="#" id="option102" class="option">Number of shareholders</a>
+                            <a href="#" id="option103" class="option">Stock price amplitude</a>
+                            <a href="#" id="option104" class="option">Listing days</a>
+                            <a href="#" id="option105" class="option">Trading days</a>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="sale">
+                    <button class="dropbtn1" id="sale-button">1.sale condition</button>
+                    <div class="dropdown dropdown-3 common-dropdown">
+                        <button class="dropbtn">1.Technical indicators</button>
+                        <div class="dropdown-content">
+                            <!-- 在这里添加选项 -->
+                            <a href="#" id="option1" class="option" >MA</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-ma">
+                                <a href="#" id="sub-option-magoldfork" class="sub-option2">MA gold fork</a>
+                                <a href="#" id="sub-option-madeathfork" class="sub-option2">MA dead fork</a>
+                                <a href="#" id="sub-option-mabull" class="sub-option2">MA long position</a>
+                                <a href="#" id="sub-option-mabear" class="sub-option2">MA short position</a>
+                            </div>
+                            <a href="#" id="option46" class="option">MACD</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-macd">
+                                <a href="#" id="sub-option-macdgoldcross" class="sub-option2">MACD golden cross</a>
+                                <a href="#" id="sub-option-macddeadcross" class="sub-option2">MACD dead cross</a>
+                                <a href="#" id="sub-option-macdbullish" class="sub-option2">MACD bullish</a>
+                                <a href="#" id="sub-option-macdbearish" class="sub-option2">MACD bearish</a>
+                                <a href="#" id="sub-option-macdhiddenbullish" class="sub-option2">Hidden bullish divergence</a>
+                                <a href="#" id="sub-option-macdhiddenbearish" class="sub-option2">Hidden bearish divergence</a>
+                            </div>
+
+                            <a href="#" id="option62" class="option">RSI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-rsi">
+                                <a href="#" id="sub-option-rsigoldcross" class="sub-option2">RSI golden cross</a>
+                                <a href="#" id="sub-option-rsideadcross" class="sub-option2">RSI dead cross</a>
+                                <a href="#" id="sub-option-rsibullish" class="sub-option2">RSI bullish</a>
+                                <a href="#" id="sub-option-rsibearish" class="sub-option2">RSI bearish</a>
+                                <a href="#" id="sub-option-rsihiddenbullish" class="sub-option2">RSI hidden bullish divergence</a>
+                                <a href="#" id="sub-option-rsihiddenbearish" class="sub-option2">RSI hidden bearish divergence</a>
+                            </div>
+
+                            <a href="#" id="option11" class="option">BOLL</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-bollinger">
+                                <a href="#" id="sub-option-bollingermidline" class="sub-option2">Bollinger Midline</a>
+                                <a href="#" id="sub-option-bollingerlowerband" class="sub-option2">Bollinger Lower Band</a>
+                                <a href="#" id="sub-option-bollingerbreakupper" class="sub-option2">Bollinger Break Upper Band</a>
+                                <a href="#" id="sub-option-bollingerbreaklower" class="sub-option2">Bollinger Break Lower Band</a>
+                            </div>
+
+                            <a href="#" id="option5" class="option">ATR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-atr">
+                                <a href="#" id="sub-option-atrabove" class="sub-option2">ATR above</a>
+                                <a href="#" id="sub-option-atrbelow" class="sub-option2">ATR below</a>
+                            </div>
+
+                            <a href="#" id="option15" class="option">CCI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-cci">
+                                <a href="#" id="sub-option-ccigreater" class="sub-option2">CCI greater than</a>
+                                <a href="#" id="sub-option-cciless" class="sub-option2">CCI less than</a>
+                                <a href="#" id="sub-option-cciinterval" class="sub-option2">CCI interval</a>
+                            </div>
+
+                            <a href="#" id="option41" class="option">KD</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-kd">
+                                <a href="#" id="sub-option-dlinegreater" class="sub-option2">D line greater than</a>
+                                <a href="#" id="sub-option-dlineless" class="sub-option2">D line less than</a>
+                                <a href="#" id="sub-option-klinebreakup" class="sub-option2">K line breaks above D line</a>
+                                <a href="#" id="sub-option-klinebreakdown" class="sub-option2">K line breaks below D line</a>
+                            </div>
+
+                            <a href="#" id="option53" class="option">OBV</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-obv">
+                                <a href="#" id="sub-option-obvrising" class="sub-option2">OBV rising</a>
+                                <a href="#" id="sub-option-obvfalling" class="sub-option2">OBV falling</a>
+                            </div>
+
+                            <a href="#" id="option32" class="option">DMI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-dmi">
+                                <a href="#" id="sub-option-pdibreakeup" class="sub-option2">PDI breaks above MDI</a>
+                                <a href="#" id="sub-option-pdibreakedown" class="sub-option2">PDI breaks below MDI</a>
+                                <a href="#" id="sub-option-adxuptrend" class="sub-option2">ADX uptrend</a>
+                                <a href="#" id="sub-option-adxreversal" class="sub-option2">ADX reversal</a>
+                            </div>
+
+                            <a href="#" id="option61" class="option">ROC</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-roc">
+                                <a href="#" id="sub-option-rocbreakup" class="sub-option2">ROC breaks above ROCMA</a>
+                                <a href="#" id="sub-option-rocbreakdown" class="sub-option2">ROC breaks below ROCMA</a>
+                                <a href="#" id="sub-option-rocoverbought" class="sub-option2">ROC overbought</a>
+                                <a href="#" id="sub-option-rocoversold" class="sub-option2">ROC oversold</a>
+                            </div>
+
+                            <a href="#" id="option2" class="option">ADTM</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-adtm">
+                                <a href="#" id="sub-option-adtmlower" class="sub-option2">ADTM lower than</a>
+                                <a href="#" id="sub-option-adtmhigher" class="sub-option2">ADTM higher than</a>
+                            </div>
+
+                            <a href="#" id="option70" class="option">TRIX</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-trix">
+                                <a href="#" id="sub-option-trixbreakup" class="sub-option2">TRIX breaks above average</a>
+                                <a href="#" id="sub-option-trixbreakdown" class="sub-option2">TRIX breaks below average</a>
+                            </div>
+
+                            <a href="#" id="option76" class="option">VR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-vr">
+                                <a href="#" id="sub-option-vrgreater" class="sub-option2">VR line greater than</a>
+                                <a href="#" id="sub-option-vrless" class="sub-option2">VR line less than</a>
+                                <a href="#" id="sub-option-vrupward" class="sub-option2">VR upward</a>
+                                <a href="#" id="sub-option-vrdownward" class="sub-option2">VR downward</a>
+                            </div>
+
+                            <a href="#" id="option48" class="option">MFI</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-mfi">
+                                <a href="#" id="sub-option-mfigreater" class="sub-option2">MFI greater than</a>
+                                <a href="#" id="sub-option-mfiless" class="sub-option2">MFI less than</a>
+                            </div>
+
+                            <a href="#" id="option63" class="option">SAR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-sar">
+                                <a href="#" id="sub-option-pricebelowsar" class="sub-option2">Price below SAR</a>
+                                <a href="#" id="sub-option-priceabovesar" class="sub-option2">Price above SAR</a>
+                            </div>
+
+                            <a href="#" id="option77" class="option">WAD</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-wad">
+                                <a href="#" id="sub-option-wadupward" class="sub-option2">WAD upward</a>
+                                <a href="#" id="sub-option-waddownward" class="sub-option2">WAD downward</a>
+                            </div>
+
+                            <a href="#" id="option36" class="option">EMV</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-emv">
+                                <a href="#" id="sub-option-emvbreakup" class="sub-option2">EMV breaks above 0</a>
+                                <a href="#" id="sub-option-emvbreakdown" class="sub-option2">EMV breaks below 0</a>
+                                <a href="#" id="sub-option-emvavgbreakup" class="sub-option2">Average breaks above 0</a>
+                                <a href="#" id="sub-option-emvavgbreakdown" class="sub-option2">Average breaks below 0</a>
+                            </div>
+
+                            <a href="#" id="option78" class="option">WR</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-wr">
+                                <a href="#" id="sub-option-wrgreater" class="sub-option2">WR greater than</a>
+                                <a href="#" id="sub-option-wrless" class="sub-option2">WR less than</a>
+                            </div>
+
+                            <a href="#" id="option50" class="option">MTM</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-mtm">
+                                <a href="#" id="sub-option-mtmbreakup" class="sub-option2">MTM breaks above MTMMA</a>
+                                <a href="#" id="sub-option-mtmbreakdown" class="sub-option2">MTM breaks below MTMMA</a>
+                                <a href="#" id="sub-option-mtmupward" class="sub-option2">MTM upward</a>
+                                <a href="#" id="sub-option-mtmdownward" class="sub-option2">MTM downward</a>
+                            </div>
+
+                            <a href="#" id="option71" class="option">UOS</a>
+                            <div class="strategy-sub-options" style="display: none;" id="sub-option-uos">
+                                <a href="#" id="sub-option-uosreversal" class="sub-option2">UOS reversal</a>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                    <div class="dropdown dropdown-4 common-dropdown">
+                        <button class="dropbtn">2.Market</button>
+                        <div class="dropdown-content">
+                            <!-- 在这里添加选项 -->
+                            <a href="#" id="option189" class="option">Opening price</a>
+                            <a href="#" id="option190" class="option">Closing price</a>
+                            <a href="#" id="option191" class="option">Highest price</a>
+                            <a href="#" id="option192" class="option">Lowest price</a>
+                            <a href="#" id="option193" class="option">Closing price of the previous day</a>
+                            <a href="#" id="option194" class="option">Daily average transaction price</a>
+                            <a href="#" id="option195" class="option">Closing price of the right after the right</a>
+                            <a href="#" id="option196" class="option">Average price of the right after the right</a>
+                            <a href="#" id="option197" class="option">Transaction amount</a>
+                            <a href="#" id="option198" class="option">Trading volume</a>
+                            <a href="#" id="option199" class="option">Stock price increase</a>
+                            <a href="#" id="option200" class="option">Relative increase of the stock price</a>
+                            <a href="#" id="option201" class="option">Cumulative turnover rate</a>
+                            <a href="#" id="option202" class="option">Limit mark of rise and fall</a>
+                            <a href="#" id="option203" class="option">Total share capital</a>
+                            <a href="#" id="option204" class="option">Circulating share capital</a>
+                            <a href="#" id="option205" class="option">Total market value</a>
+                            <a href="#" id="option206" class="option">Circulating market value</a>
+                            <a href="#" id="option207" class="option">Number of shareholders</a>
+                            <a href="#" id="option208" class="option">Stock price amplitude</a>
+                            <a href="#" id="option209" class="option">Listing days</a>
+                            <a href="#" id="option210" class="option">Trading days</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div><!--分割线-->
+            <!-- 右边分区 -->
+            <div id="rightPanel">
+                <h2>Flow chart</h2>
+                <!-- 流程图插入位置 -->
+                <div id="topDiagramDiv" class="diagramBorder"><!-- 顶部流程图框格 -->
+                    <div id="linkPaletteDiv"></div>  <!--连线-->
+                      
+                </div> 
+                <div id="bottomDiagramDiv" class="diagramBorder"></div> <!-- 底部流程图框格 -->
+
+                <div id="flowchart"></div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <button id="saveButton">Save</button>
+        <a href="{{ url_for('page3') }}"></a>
+           <button id="generateButton">Generate</button>
+        </a>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

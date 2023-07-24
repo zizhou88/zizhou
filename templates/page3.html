@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <!-- 导航栏代码 -->
+  <nav>
+      <div class="logo" href="university.jpg">
+        <img src="university.jpg" alt="Logo">
+      </div>
+      <div class="links">
+        <a href="#">主页</a>
+        <a href="#">策略编写</a>
+        <a href="#">策略生成</a>
+        <a href="#">策略回测</a>
+        <a href="#">我的策略</a>
+        <a href="#">用户</a>
+      </div>
+    </nav>
+
+    <!-- 页面主体部分 -->
+    <div id="main">
+        <!-- 左边栏 -->
+        <div id="sidebar">
+            <!-- 创建新策略部分 -->
+            <div class="sidebar" id = "sidebar">
+                <img src="newp.jpg" alt="newp" id="newp">
+                <div id="createStrategy" style="display: none;">
+                    <input type="text" id="strategyName" placeholder="策略名称">
+                    <button id="createButton">创建</button>
+                </div>
+            
+            </div>
+            <!-- 策略列表 -->
+            <div id="strategyList"></div>
+        </div>
+
+        <!-- 内容区域 -->
+        <div id="content">
+            <!-- 左边分区 -->
+            <div id="leftPanel">
+                <h2>流程图</h2>
+                <!-- 流程图插入位置 -->
+                <div id="flowchart"></div>   
+            </div>
+            <div class="divider"></div><!--分割线-->
+            <!-- 右边分区 -->
+            <div id="rightPanel">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

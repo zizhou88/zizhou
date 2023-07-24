@@ -1,0 +1,190 @@
+
+/* 导航栏样式 */
+nav {
+    background-color:#f5f1f1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    /* 添加其他样式属性，如宽度、高度等 */
+  }
+  
+  nav .logo img{
+    width: 45px;
+    height: 45px;
+    margin-left: 2ch;
+    /* 添加图标样式，如宽度、高度、边框等 */
+  }
+
+
+  nav .links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4ch; /* 使用4个字符宽度作为间隔 */
+    /* 添加其他样式属性，如间距等 */
+  }
+  
+  nav .links a {
+    color: #333333;
+    font-family:"幼圆" , Arial, sans-serif;
+    font-size: 23px;
+    text-decoration: none;
+    font-weight: bold;
+    /* 添加其他样式属性，如间距等 */
+  }
+  
+  nav .links a:hover {
+    background: radial-gradient(circle, #acaaaa, #ffffff);
+    padding: 5px;
+  }
+
+
+
+/* 页面主体 */
+#main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100vh - 50px);
+}
+
+
+/* 左边栏 */
+#sidebar {
+    background-color: #f5f1f1;
+}
+
+.sidebar.wide {
+    width: 300px;  /* 可以根据你的需求调整宽度 */
+}
+
+#newp {
+    width: 45px;    /* 定义宽度为22像素 */
+    height: 30px;   /* 定义高度为45像素 */
+    margin-top: 2ch;
+}
+
+#strategyList img {
+    width: 45px;
+    height: 35px;
+    display: block; /* 使每个图标独占一行，实现垂直排列 */
+    margin-top: 1ch;
+}
+
+.strategy-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.strategy-icon {
+    width: 45px;
+    height: 35px;
+}
+
+
+/* 内容区域 */
+#content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+}
+
+
+/* 左边分区 */
+#leftPanel {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.common-dropdown {
+    display: none;
+    border: 1px solid black;   /* 添加黑色边框 */
+    margin-bottom: 10px;       /* 添加一些底部外边距，使下拉栏之间有一些空间 */
+    padding: 10px;             /* 添加一些内边距，使下拉栏的内容与边框有一些空间 */
+    
+}
+
+.dropdown-content {
+    display: none;
+  }
+
+.option {
+    text-decoration: none;  /* 删除下划线 */
+    color: black;  /* 文字颜色为黑色 */
+    border: 1px solid black;  /* 添加黑色边框 */
+    display: block;  /* 让选项占满整个下拉菜单 */
+    padding: 10px 5px;  /* 增加内边距，让选项看起来更大一些 */
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}  
+
+
+.sub-option1,
+.sub-option2{
+    text-decoration: none;  /* 删除下划线 */
+    color: black;  /* 文字颜色为黑色 */
+    border: 1px solid black;  /* 添加黑色边框 */
+    padding: 5px 2.5px;  /* 增加内边距，让选项看起来更大一些 */
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.option:hover {
+    background-color: #ddd;  /* 当鼠标悬停在选项上时，改变背景色 */
+}
+
+
+/*分割线*/
+.divider {
+    border-left: 1px solid #333333; /* 定义左边框为1像素的实线，颜色为灰色 */
+    height: 100%; /* 设置高度为100%，使分割线占满整个高度 */
+    width: 0; /* 设置宽度为0，使元素本身不占用空间 */
+    margin-left: 10px; /* 添加一些左边外边距，使分割线与左边分区有一些空间 */
+    margin-right: 10px; /* 添加一些右边外边距，使分割线与右边分区有一些空间 */
+}
+
+/* 右边分区 */
+#rightPanel {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#topDiagramDiv ,
+#bottomDiagramDiv {
+      flex-grow: 1;
+      margin-bottom: 10px;
+    }
+
+
+.diagramBorder {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    width: 95%;
+    height: auto;
+}
+
+/*底边栏*/
+#footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #footer button {
+    margin-left: 10px;
+  }
